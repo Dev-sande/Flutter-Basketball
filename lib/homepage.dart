@@ -10,9 +10,10 @@ class HomePage extends StatelessWidget {
 
   Future allTeams() async {
     var response = await http.get(Uri.https('balldontlie.io', 'api/v1/teams'));
-    var jsonData = jsonDecode(response.body);
 
-    for (var oneTeam in jsonData['data']) {
+    var apiData = jsonDecode(response.body);
+
+    for (var oneTeam in apiData['data']) {
       final team = Team(
         abbreviation: oneTeam['abbreviation'],
         city: oneTeam['city'],
@@ -41,9 +42,8 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: ListTile(
-                          title: Text(teams[index].abbreviation),
-                          subtitle: Text(teams[index].city),
-                        ),
+                            title: Text(teams[index].abbreviation),
+                            subtitle: Text(teams[index].city)),
                       ),
                     );
                   },
