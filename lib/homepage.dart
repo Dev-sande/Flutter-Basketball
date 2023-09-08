@@ -8,14 +8,14 @@ import 'model.dart';
 class HomePage extends StatelessWidget {
   List<Team> teams = [];
 
-  Future getTeams() async {
+  Future allTeams() async {
     var response = await http.get(Uri.https('balldontlie.io', 'api/v1/teams'));
     var jsonData = jsonDecode(response.body);
 
-    for (var eachTeam in jsonData['data']) {
+    for (var oneTeam in jsonData['data']) {
       final team = Team(
-        abbreviation: eachTeam['abbreviation'],
-        city: eachTeam['city'],
+        abbreviation: oneTeam['abbreviation'],
+        city: oneTeam['city'],
       );
       teams.add(team);
     }
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-            future: getTeams(),
+            future: allTeams(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView.builder(
